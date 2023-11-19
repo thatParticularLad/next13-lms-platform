@@ -6,14 +6,27 @@ async function main() {
   try {
     await database.category.createMany({
       data: [
-        { name: "Computer Science" },
-        { name: "Music" },
-        { name: "Fitness" },
-        { name: "Photography" },
-        { name: "Accounting" },
+        { name: "Airbus" },
+        { name: "ATR" },
+        { name: "Boeing" },
+        { name: "Bombardier" },
+        { name: "Embraer" },
         { name: "Engineering" },
-        { name: "Filming" },
-      ]
+        { name: "Aircraft Engine Run-up" },
+        { name: "Aircraft General Familiarization" },
+        { name: "Auditors training" },
+        { name: "Aviation legislation" },
+        { name: "Barescope Inspection" },
+        { name: "Component Maintenance" },
+        { name: "Engineering (CAMO)" },
+        { name: "EWIS" },
+        { name: "Fuel Tank Safety" },
+        { name: "Ground Handling" },
+        { name: "Human Factors" },
+        { name: "Instructors Training" },
+        { name: "Logistics" },
+        { name: "Safety Management System (SMS)" },
+      ],
     });
 
     console.log("Success");
