@@ -23,9 +23,9 @@ import { Actions } from "./_components/actions";
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
 
-  if (!userId) {
-    return redirect("/");
-  }
+  // if (!userId) {
+  //   return redirect("/");
+  // }
 
   const course = await db.course.findUnique({
     where: {
