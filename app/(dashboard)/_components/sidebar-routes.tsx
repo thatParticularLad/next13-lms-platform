@@ -1,5 +1,5 @@
 "use client";
-
+import { useAuth } from "@clerk/nextjs";
 import { BarChart, Compass, Layout, List } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -11,6 +11,10 @@ const guestRoutes = [
     label: "Browse",
     href: "/search",
   },
+];
+
+const registeredRoutes = [
+  ...guestRoutes,
   {
     icon: Layout,
     label: "Dashboard",
@@ -33,10 +37,17 @@ const teacherRoutes = [
 
 export const SidebarRoutes = () => {
   const pathname = usePathname();
+  const { isLoaded, userId } = useAuth();
 
   const isTeacherPage = pathname?.includes("/teacher");
+  const isRegistered = userId && isLoaded;
 
-  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
+  // TODO: Add is teacher check
+  const routes = isTeacherPage
+    ? teacherRoutes
+    : isRegistered
+    ? registeredRoutes
+    : guestRoutes;
 
   return (
     <div className="flex flex-col w-full">
