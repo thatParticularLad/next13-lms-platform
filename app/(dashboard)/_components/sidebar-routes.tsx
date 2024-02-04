@@ -9,7 +9,7 @@ const guestRoutes = [
   {
     icon: Compass,
     label: "Browse",
-    href: "/search",
+    href: "/",
   },
 ];
 
@@ -18,7 +18,7 @@ const registeredRoutes = [
   {
     icon: Layout,
     label: "Dashboard",
-    href: "/",
+    href: "/courses",
   },
 ];
 
