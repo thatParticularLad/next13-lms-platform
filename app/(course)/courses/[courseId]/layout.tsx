@@ -17,7 +17,7 @@ const CourseLayout = async ({
   const { userId } = auth();
 
   // if (!userId) {
-  //   return redirect("/")
+  //   return redirect("/");
   // }
 
   const course = await db.course.findUnique({
@@ -49,11 +49,11 @@ const CourseLayout = async ({
     },
   });
 
-  // if (!course) {
-  //   return redirect("/");
-  // }
+  if (!course) {
+    return redirect("/");
+  }
 
-  const progressCount = await getProgress(course.id, userId);
+  const progressCount = userId ? await getProgress(course.id, userId) : 0;
 
   return (
     <div className="h-full">

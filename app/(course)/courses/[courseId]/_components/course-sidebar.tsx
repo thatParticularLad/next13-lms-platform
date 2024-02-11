@@ -22,18 +22,16 @@ export const CourseSidebar = async ({
 }: CourseSidebarProps) => {
   const { userId } = auth();
 
-  // if (!userId) {
-  //   return redirect("/");
-  // }
-
-  const purchase = await db.purchase.findUnique({
-    where: {
-      userId_courseId: {
-        userId,
-        courseId: course.id,
-      },
-    },
-  });
+  const purchase = userId
+    ? await db.purchase.findUnique({
+        where: {
+          userId_courseId: {
+            userId,
+            courseId: course.id,
+          },
+        },
+      })
+    : null;
 
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
