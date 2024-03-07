@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { Chapter, Course, UserProgress, Prisma } from "@prisma/client";
 
 import { db } from "@/lib/db";
 import { getProgress } from "@/actions/get-progress";
@@ -29,19 +30,13 @@ const CourseLayout = async ({
         where: {
           isPublished: true,
         },
-        // If user exists, get user progress for the course
-        ...(userId
-          ? {
-              include: {
-                userProgress: {
-                  where: {
-                    userId,
-                  },
-                },
-              },
-            }
-          : {}),
-
+        include: {
+          userProgress: {
+            where: userId
+              ? ({ userId } as Prisma.UserProgressWhereInput)
+              : undefined,
+          },
+        },
         orderBy: {
           position: "asc",
         },
@@ -52,6 +47,10 @@ const CourseLayout = async ({
   if (!course) {
     return redirect("/");
   }
+
+  const updateCourse = userId
+    ? course
+    : { ...course, chapters: { ...course.chapters, userProgress: null } };
 
   const progressCount = userId ? await getProgress(course.id, userId) : 0;
 

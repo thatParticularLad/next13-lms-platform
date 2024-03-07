@@ -7,11 +7,12 @@ import { CourseProgress } from "@/components/course-progress";
 
 import { CourseSidebarItem } from "./course-sidebar-item";
 
+type UserProgressType = { userProgress: UserProgress[] | null } | null;
+type ChapterType = Chapter & UserProgressType;
+
 interface CourseSidebarProps {
   course: Course & {
-    chapters: (Chapter & {
-      userProgress: UserProgress[] | null;
-    })[];
+    chapters: ChapterType[];
   };
   progressCount: number;
 }
@@ -49,7 +50,7 @@ export const CourseSidebar = async ({
             key={chapter.id}
             id={chapter.id}
             label={chapter.title}
-            isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
+            isCompleted={!!chapter?.userProgress?.[0]?.isCompleted}
             courseId={course.id}
             isLocked={!chapter.isFree && !purchase}
           />
