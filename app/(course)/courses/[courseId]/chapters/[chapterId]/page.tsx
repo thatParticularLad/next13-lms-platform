@@ -18,10 +18,6 @@ const ChapterIdPage = async ({
 }) => {
   const { userId } = auth();
 
-  // if (!userId) {
-  //   return redirect("/");
-  // }
-
   const {
     chapter,
     course,
@@ -37,6 +33,11 @@ const ChapterIdPage = async ({
   });
 
   if (!chapter || !course) {
+    return redirect("/");
+  }
+
+  // Redirect un-logged in user if course is not free
+  if (!chapter.isFree && !userId) {
     return redirect("/");
   }
 
