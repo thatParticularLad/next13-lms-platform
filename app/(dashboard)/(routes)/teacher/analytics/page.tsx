@@ -9,9 +9,9 @@ import { Chart } from "./_components/chart";
 const AnalyticsPage = async () => {
   const { userId } = auth();
 
-  // if (!userId) {
-  //   return redirect("/");
-  // }
+  if (!userId) {
+    return redirect("/");
+  }
 
   const { data, totalRevenue, totalSales } = await getAnalytics(userId);
 
