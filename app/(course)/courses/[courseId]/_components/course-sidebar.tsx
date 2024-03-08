@@ -22,6 +22,19 @@ export const CourseSidebar = async ({
   progressCount,
 }: CourseSidebarProps) => {
   const { userId } = auth();
+  // const total = course.chapters.length;
+
+  // const lastActiveIndex = Math.round(total / (progressCount * 0.01));
+  // const index = lastActiveIndex === 0 ? 0 :
+  const isPreviousCompleted = (chapters: ChapterType[], index: number) => {
+    if (index < 1) {
+      return true;
+    } else if (!!chapters[index - 1].userProgress?.[0]?.isCompleted) {
+      return true;
+    } else {
+      false;
+    }
+  };
 
   const purchase = userId
     ? await db.purchase.findUnique({
@@ -45,14 +58,17 @@ export const CourseSidebar = async ({
         )}
       </div>
       <div className="flex flex-col w-full">
-        {course.chapters.map((chapter) => (
+        {course.chapters.map((chapter, index) => (
           <CourseSidebarItem
             key={chapter.id}
             id={chapter.id}
             label={chapter.title}
             isCompleted={!!chapter?.userProgress?.[0]?.isCompleted}
             courseId={course.id}
-            isLocked={!chapter.isFree && !purchase}
+            isLocked={
+              (!chapter.isFree && !purchase) ||
+              !isPreviousCompleted(course.chapters, index)
+            }
           />
         ))}
       </div>
