@@ -78,6 +78,7 @@ export const VideoPlayer = ({
           className={cn(!isReady && "hidden")}
           onCanPlay={() => setIsReady(true)}
           onEnded={onEnd}
+          accentColor="#01577A"
           playbackId={playbackId}
         />
       )}
